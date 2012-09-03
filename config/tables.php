@@ -6,6 +6,9 @@ return array(
 		
 		'guests' => array(
 			
+			// How many records per page?
+			'records-per-page' => 1,
+			
 			/*
 			|--------------------------------------------------------------------------
 			| Listing fields
@@ -15,11 +18,8 @@ return array(
 			| Leaving the array empty will display all the columns in the database
 			| table. It's probably best to specify which columns to display.
 			| 
-			| Example:
-			| 			'listing' => array( 'id' , 'name' , 'email' ),
-			| 
 			*/
-			'listing' => array(),
+			'listing' => array( 'id' , 'name' , 'email' , 'age' ),
 			
 			/*
 			|--------------------------------------------------------------------------
@@ -28,11 +28,8 @@ return array(
 			| 
 			| Which fields to display when creating a new record.
 			| 
-			| Example:
-			| 			'create' => array( 'name' , 'email' ),
-			| 
 			*/
-			'create' => array(),
+			'create' => array( 'name' , 'email' , 'age' , 'bio' ),
 			
 			/*
 			|--------------------------------------------------------------------------
@@ -41,11 +38,36 @@ return array(
 			| 
 			| Which fields to display when updating a record.
 			| 
-			| Example:
-			| 			'update' => array( 'name' , 'email' ),
+			*/
+			'update' => array( 'name' , 'email' , 'age' , 'bio' ),
+			
+			/*
+			|--------------------------------------------------------------------------
+			| Field types
+			|--------------------------------------------------------------------------
+			| 
+			| Specify whether each of the columns should be a text field, textarea,
+			| drop-down menu, radio or checkbox.
+			| 
+			| Drop-down, radio and checkbox items are required to be in an array,
+			| as demonstrated by the 'age' field.
 			| 
 			*/
-			'update' => array(),
+			'field_types' => array(
+				'name'	=> 'text',
+				'email'	=> 'text',
+				'age'	=> array(
+					'type' => 'select',
+					'options' => array(
+						'age-group-1' => '1 - 10',
+						'age-group-2' => '11 - 20',
+						'age-group-3' => '21 - 30',
+						'age-group-4' => '31 - 40',
+						'age-group-5' => '41 and over',
+					),
+				),
+				'bio'	=> 'textarea',
+			),
 			
 			/*
 			|--------------------------------------------------------------------------
@@ -55,14 +77,12 @@ return array(
 			| Validation rules against specific fields. Follows the Laravel validation
 			| rules.
 			| 
-			| Example:
-			| 			'validation' => array(
-			| 				'name'  => 'required|min_length:3',
-			| 				'email' => 'required|email',
-			|			),
-			| 
 			*/
-			'validation' => array()
+			'validation' => array(
+				'name'	=> 'required|min_length:3',
+				'email'	=> 'required|email',
+				'bio'	=> 'min_length:10',
+			),
 			
 		)
 		
