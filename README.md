@@ -1,0 +1,4 @@
+AngularCRUD
+===========
+
+AngularCRUD Laravel Bundle
