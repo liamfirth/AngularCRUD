@@ -85,7 +85,7 @@ class AngularCRUD {
 				break;
 			
 			default:
-				throw new Exception( __( _('errors.unrecognised-action') , array('action' => $action) ) );
+				throw new Exception( __( _('errors.unrecognised-action') , array( 'action' => $action ) ) );
 				break;
 			
 		}
@@ -111,6 +111,7 @@ class AngularCRUD {
 		// Get the results based on whether displaying a few db columns or all.
 		$results = ( !$listing ) ? $query->get() : $query->get( $listing );
 		
+		
 		$this->_return(array(
 			'total_records'	=> $total,
 			'results_count'	=> count($results),
@@ -122,12 +123,20 @@ class AngularCRUD {
 	private function _create()
 	{
 		
+		var_dump( Input::json() );
+		exit;
+		
+		
 		$this->_return( 'create' );
 		
 	}
 	
 	private function _read()
 	{
+		
+		var_dump( Input::json() );
+		exit;
+		
 		
 		$this->_return( 'read' );
 		
@@ -136,12 +145,20 @@ class AngularCRUD {
 	private function _update()
 	{
 		
+		var_dump( Input::json() );
+		exit;
+		
+		
 		$this->_return( 'update' );
 		
 	}
 	
 	private function _delete()
 	{
+		
+		var_dump( Input::json() );
+		exit;
+		
 		
 		$this->_return( 'delete' );
 		
