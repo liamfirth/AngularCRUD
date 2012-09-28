@@ -7,7 +7,7 @@ return array(
 		'guests' => array(
 			
 			// How many records per page?
-			'records-per-page' => 1,
+			'records-per-page' => 2,
 			
 			/*
 			|--------------------------------------------------------------------------
@@ -46,11 +46,13 @@ return array(
 			| Field types
 			|--------------------------------------------------------------------------
 			| 
-			| Specify whether each of the columns should be a text field, textarea,
-			| drop-down menu, radio or checkbox.
+			| Specify how to render each of the columns in the form, whether to render
+			| them as a text field, textarea, drop-down menu, radio or checkbox.
+			| 
+			| There are also special field types, such as 'wysiwyg' and 'upload'.
 			| 
 			| Drop-down, radio and checkbox items are required to be in an array,
-			| as demonstrated by the 'age' field.
+			| and must provide 2 keys; 'type' (select, radio, checkbox) and 'options'.
 			| 
 			*/
 			'field_types' => array(

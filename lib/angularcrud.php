@@ -39,7 +39,7 @@ class AngularCRUD {
 	}
 	
 	/**
-	 * Creates a new instance of the AngularJS
+	 * Creates a new instance of the AngularCRUD
 	 * @param  [type] $table [description]
 	 * @return [type]        [description]
 	 */
@@ -60,6 +60,7 @@ class AngularCRUD {
 	private function _handle_action()
 	{
 		
+		// Get the 'action' URL param or use 'list' as a default
 		$action = Input::get('action', 'list');
 		
 		switch ( $action ) {
@@ -112,7 +113,7 @@ class AngularCRUD {
 		$results = ( !$listing ) ? $query->get() : $query->get( $listing );
 		
 		
-		$this->_return(array(
+		$this->_render(array(
 			'total_records'	=> $total,
 			'results_count'	=> count($results),
 			'results'		=> $results,
@@ -172,7 +173,26 @@ class AngularCRUD {
 	 * @return void
 	 */
 	private function _return( $response ) {
-		die( json_encode( $response ) );
+		echo json_encode( $response );
+		exit;
+	}
+	
+	/**
+	 * Outputs the view and passes some default variables to it along
+	 * with any optional data that needs to be passed to the template.
+	 * 
+	 * @param  array $data Data to pass to the template
+	 * @return void
+	 */
+	private function _render( $data ) {
+		$default_data = array(
+			'table'			=> $this->_table,
+			'config'		=> $this->_config,
+			'bundle_path'	=> '/bundles/angularcrud',
+		);
+		
+		echo View::make( _('template') , array_merge( $default_data , $data ) );
+		exit;
 	}
 	
 }
