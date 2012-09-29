@@ -61,30 +61,24 @@ class AngularCRUD {
 	{
 		
 		// Get the 'action' URL param or use 'list' as a default
-		$action = Input::get('action', 'list');
+		$action = Input::get('action', 'index');
 		
 		switch ( $action ) {
 			
-			case 'list':
-				$this->_list();
-				break;
+			// The main view. Lists items that can be edited.
+			case 'index':				$this->_index();		break;
 			
-			case 'create':
-				$this->_create();
-				break;
+			// Core AJAX functions
+			case 'list':				$this->_list();			break;
+			case 'create':				$this->_create();		break;
+			case 'view':				$this->_view();			break;
+			case 'update':				$this->_update();		break;
+			case 'delete':				$this->_delete();		break;
 			
-			case 'read':
-				$this->_read();
-				break;
+			// Helper AJAX functions
+			case 'config':				$this->_config();		break;
 			
-			case 'update':
-				$this->_update();
-				break;
-			
-			case 'delete':
-				$this->_delete();
-				break;
-			
+			// If all above fail.
 			default:
 				throw new Exception( __( _('errors.unrecognised-action') , array( 'action' => $action ) ) );
 				break;
@@ -93,18 +87,26 @@ class AngularCRUD {
 		
 	}
 	
+	private function _index()
+	{
+		$this->_render();
+	}
+	
 	private function _list()
 	{
 		
 		// Get total record count.
 		$total = DB::table( $this->_table )->count();
 		
-		// Prepare variables
+		// Prepare variables.
 		$listing = $this->_config['listing'];
-		$take = Input::get( 'take' , $this->_config['records-per-page'] );
+		$take = Input::get( 'take' , $this->_config['records_per_page'] );
 		$skip = Input::get( 'skip' , 0 );
 		
-		// Generate the query
+		// Make sure that the records per page is a number higher than zero.
+		$take = $take ? $take : $this->_config['records_per_page'];
+		
+		// Generate the query.
 		$query = DB::table( $this->_table )
 			->skip( $skip )
 			->take( $take );
@@ -113,7 +115,7 @@ class AngularCRUD {
 		$results = ( !$listing ) ? $query->get() : $query->get( $listing );
 		
 		
-		$this->_render(array(
+		$this->_return(array(
 			'total_records'	=> $total,
 			'results_count'	=> count($results),
 			'results'		=> $results,
@@ -132,7 +134,7 @@ class AngularCRUD {
 		
 	}
 	
-	private function _read()
+	private function _view()
 	{
 		
 		var_dump( Input::json() );
@@ -167,6 +169,16 @@ class AngularCRUD {
 	
 	
 	/**
+	 * Outputs the configuration data.
+	 * 
+	 * @return JSON
+	 */
+	private function _config()
+	{
+		$this->_return( $this->_config );
+	}
+	
+	/**
 	 * Outputs JSON from the reponse being sent back to the browser.
 	 * 
 	 * @param  mixed $response
@@ -184,7 +196,7 @@ class AngularCRUD {
 	 * @param  array $data Data to pass to the template
 	 * @return void
 	 */
-	private function _render( $data ) {
+	private function _render( $data = array() ) {
 		$default_data = array(
 			'table'			=> $this->_table,
 			'config'		=> $this->_config,

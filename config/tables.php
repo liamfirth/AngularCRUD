@@ -6,8 +6,11 @@ return array(
 		
 		'guests' => array(
 			
-			// How many records per page?
-			'records-per-page' => 2,
+			// How many records per page? (Used for pagination)
+			'records_per_page' => 2,
+			
+			// Set the primary key of the database table.
+			'primary_key' => 'id',
 			
 			/*
 			|--------------------------------------------------------------------------
@@ -23,7 +26,17 @@ return array(
 			
 			/*
 			|--------------------------------------------------------------------------
-			| Create fields
+			| Viewing records
+			|--------------------------------------------------------------------------
+			| 
+			| Which fields to show when viewing a record.
+			| 
+			*/
+			'view' => array( 'id' , 'name' , 'email' , 'age' , 'created_at' , 'updated_at' ),
+			
+			/*
+			|--------------------------------------------------------------------------
+			| Create records
 			|--------------------------------------------------------------------------
 			| 
 			| Which fields to display when creating a new record.
@@ -33,7 +46,7 @@ return array(
 			
 			/*
 			|--------------------------------------------------------------------------
-			| Update fields
+			| Update records
 			|--------------------------------------------------------------------------
 			| 
 			| Which fields to display when updating a record.
